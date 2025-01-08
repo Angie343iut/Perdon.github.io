@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perdona mi novio</title>
+  <style>
+    /* Estilos generales */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #9b59b6, #8e44ad, #6a1b9a);
+      background-size: 300% 300%;
+      animation: gradientAnimation 6s ease infinite; /* Fondo animado con gradiente morado */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Animación de fondo */
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      width: 80%;
+      max-width: 600px;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .container h1 {
+      font-size: 3em;
+      color: #9b59b6; /* Morado para "Perdóname" */
+      margin-bottom: 20px;
+      animation: slideIn 1s ease-out;
+    }
+
+    .gif {
+      max-width: 100%;
+      border-radius: 10px;
+      animation: bounceIn 1.5s ease-in-out;
+    }
+
+    .message {
+      font-size: 1.5em;
+      color: #333; /* Color de texto más neutral para el mensaje */
+      margin-top: 20px;
+      font-weight: bold;
+      animation: fadeInUp 2s ease-in-out;
+    }
+
+    .footer {
+      font-size: 1.2em;
+      color: #777; /* Color gris suave para pie de página */
+      margin-top: 30px;
+      font-style: italic;
+      animation: fadeInUp 2.5s ease-in-out;
+    }
+
+    .question {
+      font-size: 1.5em;
+      color: #9b59b6; /* Morado para la pregunta */
+      margin-top: 40px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .answer {
+      font-size: 1.5em;
+      color: #6a1b9a; /* Color de las respuestas */
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Animaciones */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      0% { transform: translateX(-100%); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes fadeInUp {
+      0% { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Estilo para "Wii" */
+    .wii-text {
+      font-size: 6em;
+      color: #9b59b6;
+      margin-top: 20px;
+      animation: enlargeWii 1s ease-in-out;
+    }
+
+    /* Animación de "Wii" */
+    @keyframes enlargeWii {
+      0% { transform: scale(1); }
+      100% { transform: scale(2); }
+    }
+
+    /* Espacio para el GIF */
+    .wii-gif {
+      margin-top: 20px;
+      display: none;
+      animation: fadeInUp 2s ease-in-out;
+    }
+
+    /* Nuevo GIF que aparece debajo del "Wii" */
+    .new-gif {
+      display: none;
+      margin-top: 20px;
+      animation: fadeInUp 2s ease-in-out;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Perdóname mi amor</h1>
+    <img src="img/tears-heartbreak.gif" alt="Gif Perdona mi novio" class="gif">
+    <p class="message">Sé que estas mal, pero te quiero mucho y te pido perdón de todo corazón, no quiero hacerte sentir mal :c.</p>
+    <p class="footer">Con cariño, tu lady.</p>
+
+    <!-- Pregunta interactiva -->
+    <div class="question">
+      <p>¿Puedes perdonarme?</p>
+    </div>
+
+    <!-- Respuesta Sí y No -->
+    <div class="answers">
+      <p id="yes" class="answer">Sí</p>
+      <p id="no" class="answer no-changing">No</p>
+    </div>
+
+    <!-- Sección para el "Wii" y el GIF -->
+    <div id="wii-gif" class="wii-gif">
+      <p id="wii-text" class="wii-text">Wii</p>
+      <!-- Aquí puedes agregar cualquier contenido si lo deseas -->
+    </div>
+
+    <!-- Nuevo GIF que aparece debajo de "Wii" -->
+    <div id="new-gif" class="new-gif">
+      <img src="img/gatito feliz.gif" alt="Nuevo Gif" class="gif">
+    </div>
+
+  </div>
+
+  <script>
+    // Variables
+    const yesButton = document.getElementById('yes');
+    const noButton = document.getElementById('no');
+    const newGifSection = document.getElementById('new-gif');  // Nuevo contenedor para el GIF
+    const wiiSection = document.getElementById('wii-gif');
+    const wiiText = document.getElementById('wii-text');
+    let noClickCount = 0;
+    let yesClickCount = 0;
+
+    // Función para aumentar el tamaño de "Sí" progresivamente
+    yesButton.addEventListener('click', function() {
+      yesClickCount++;
+      yesButton.classList.add('yes-large');
+      
+      // Cambiar "Sí" a "Wii" y agrandarlo
+      yesButton.textContent = "Wii"; // Cambiar "Sí" a "Wii"
+      yesButton.classList.add('wii-text');
+
+      // Mostrar el nuevo GIF debajo de "Wii"
+      newGifSection.style.display = "block"; // Mostrar el nuevo GIF
+
+      // Mostrar el texto "Wii" de forma permanente en su tamaño grande
+      wiiText.style.display = "block";  // Asegurarse de que "Wii" se quede visible
+      newGifSection.style.display = "block";  // Mostrar el nuevo GIF debajo de "Wii"
+
+      if (yesClickCount > 20) {
+        yesButton.style.fontSize = '10em';  // Límite del tamaño de "Wii"
+      }
+
+      // Ocultar el "No" después de hacer clic en "Sí"
+      noButton.style.display = "none";  // Ocultar el "No"
+    });
+
+    // Función para cambiar el texto de "No" de acuerdo al número de clics
+    noButton.addEventListener('click', function() {
+      if (noButton.style.pointerEvents === 'none') return;  // Si "No" está deshabilitado, no hacer nada
+      noClickCount++;
+
+      if (noClickCount === 1) {
+        noButton.textContent = "Seguro";
+        noButton.classList.add('no-secure');
+      } else if (noClickCount === 2) {
+        noButton.textContent = "Segurito";
+        noButton.classList.add('no-sure');
+      } else if (noClickCount === 3) {
+        noButton.textContent = "Pero segurote segurote";
+        noButton.classList.add('no-securo');
+      } else if (noClickCount === 4) {
+        noButton.textContent = "Jmm pa mi que sí quieres";
+        noButton.classList.add('no-securote');
+      } else if (noClickCount === 5) {
+        noButton.textContent = "Yaa";
+        noButton.classList.add('no-securote-x1');
+      } else if (noClickCount === 6) {
+        noButton.textContent = "Si sigues dando a No, me voy a morir";
+        noButton.classList.add('no-securote-x2');
+      } else if (noClickCount === 7) {
+        noButton.textContent = "Estás advertido";
+        noButton.classList.add('no-securote-x3');
+      } else if (noClickCount === 8) {
+        noButton.textContent = "*Muerta*";
+        noButton.classList.add('no-securote-x8');
+      }
+    });
+  </script>
+
+</body>
+</html>
